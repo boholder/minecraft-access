@@ -3,6 +3,7 @@ package com.github.khanshoaib3.minecraft_access.utils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 
@@ -155,5 +156,11 @@ public class PlayerPositionUtils {
             case "south_west" -> "north_east";
             default -> "unknown";
         };
+    }
+
+    public static double getDistanceWithPlayer(BlockPos pos) {
+        Vec3d p = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+        Vec3d playerPos = MinecraftClient.getInstance().player.getPos();
+        return p.distanceTo(playerPos);
     }
 }

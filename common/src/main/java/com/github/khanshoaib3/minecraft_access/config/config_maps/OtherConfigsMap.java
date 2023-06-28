@@ -22,6 +22,8 @@ public class OtherConfigsMap {
     private boolean actionBarEnabled;
     @SerializedName("Speak Harvest Of Fishing")
     private boolean fishingHarvestEnabled;
+    @SerializedName("Speak Where Sniffer Dig Out")
+    private boolean snifferDigOutEnabled;
     @SerializedName("Enable Menu Fix")
     private boolean menuFixEnabled;
     @SerializedName("Debug Mode")
@@ -115,6 +117,14 @@ public class OtherConfigsMap {
         this.fishingHarvestEnabled = fishingHarvestEnabled;
     }
 
+    public boolean isSnifferDigOutEnabled() {
+        return snifferDigOutEnabled;
+    }
+
+    public void setSnifferDigOutEnabled(boolean snifferDigOutEnabled) {
+        this.snifferDigOutEnabled = snifferDigOutEnabled;
+    }
+
     public static OtherConfigsMap getDefaultOtherConfigsMap() {
         OtherConfigsMap defaultOtherConfigsMap = new OtherConfigsMap();
         defaultOtherConfigsMap.setBiomeIndicatorEnabled(true);
@@ -126,6 +136,7 @@ public class OtherConfigsMap {
         defaultOtherConfigsMap.setUse12HourTimeFormat(false);
         defaultOtherConfigsMap.setActionBarEnabled(true);
         defaultOtherConfigsMap.setFishingHarvestEnabled(true);
+        defaultOtherConfigsMap.setSnifferDigOutEnabled(true);
         defaultOtherConfigsMap.setMenuFixEnabled(true);
         defaultOtherConfigsMap.setDebugMode(false);
 

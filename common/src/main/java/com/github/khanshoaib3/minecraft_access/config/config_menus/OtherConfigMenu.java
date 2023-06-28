@@ -142,6 +142,21 @@ public class OtherConfigMenu extends BaseScreen {
                 true);
         this.addDrawableChild(speakFishingHarvestButton);
 
+        ButtonWidget snifferDigOutButton = this.buildButtonWidget(
+                I18n.translate("minecraft_access.gui.common.button.toggle_button." + (MainClass.config.getConfigMap().getOtherConfigsMap().isSnifferDigOutEnabled() ? "enabled" : "disabled"),
+                        I18n.translate("minecraft_access.gui.other_config_menu.button.speak_sniffer_dig_out_button")
+                ),
+                (button) -> {
+                    ConfigMap configMap = MainClass.config.getConfigMap();
+                    configMap.getOtherConfigsMap().setSnifferDigOutEnabled(!configMap.getOtherConfigsMap().isSnifferDigOutEnabled());
+                    MainClass.config.setConfigMap(configMap);
+                    button.setMessage(Text.of(I18n.translate("minecraft_access.gui.common.button.toggle_button." + (MainClass.config.getConfigMap().getOtherConfigsMap().isSnifferDigOutEnabled() ? "enabled" : "disabled"),
+                            I18n.translate("minecraft_access.gui.other_config_menu.button.speak_sniffer_dig_out_button")
+                    )));
+                },
+                true);
+        this.addDrawableChild(snifferDigOutButton);
+
         ButtonWidget menuFixButton = this.buildButtonWidget(
                 I18n.translate("minecraft_access.gui.common.button.toggle_button." + (MainClass.config.getConfigMap().getOtherConfigsMap().isMenuFixEnabled() ? "enabled" : "disabled"),
                         I18n.translate("minecraft_access.gui.other_config_menu.button.menu_fix_button")
