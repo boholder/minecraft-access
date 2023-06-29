@@ -24,6 +24,9 @@ public abstract class SnifferEntityMixin {
      */
     @Inject(method = "dropSeeds", at = @At(value = "HEAD"))
     private void digging(CallbackInfo ci) {
+        // TODO if sniffer has custom name with name tag, speak that name
+        // TODO add speak interval for each individual sniffer entity
+        // TODO check if it works when playing on server.
         try {
             if (MainClass.config.getConfigMap().getOtherConfigsMap().isSnifferDigOutEnabled()) {
                 BlockPos pos = ((SnifferEntityInvoker) this).invokeGetDigPos();
