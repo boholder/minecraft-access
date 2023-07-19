@@ -28,7 +28,7 @@ jobs:
           server-id: minecraft-access # Value of the distributionManagement/repository/id field of the pom.xml
           settings-path: ${{ github.workspace }} # location for the settings.xml file
 
-      - name: Set Up Gradle
+      - name: Set up Gradle
         uses: gradle/gradle-build-action@v2.6.1
         with:
           arguments: wrapper
