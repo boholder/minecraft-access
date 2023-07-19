@@ -39,14 +39,12 @@ jobs:
       - name: Build Fabric with Gradle
         uses: gradle/gradle-build-action@v2.6.1
         with:
-          arguments: build
-          build-root-directory: ./fabric
+          arguments: :fabric:build
 
       - name: Build Forge with Gradle
         uses: gradle/gradle-build-action@v2.6.1
         with:
-          arguments: build
-          build-root-directory: ./forge
+          arguments: :forge:build
 
       - name: Move and Rename Mod Files
         run: |
