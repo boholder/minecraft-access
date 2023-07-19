@@ -49,12 +49,18 @@ jobs:
       - name: Move and Rename Mod Files
         run: |
           mkdir -p ./upload
-          rm ./fabric/build/libs/minecraft-access-*-dev-shadow.jar ./fabric/build/libs/minecraft-access-*-sources.jar
-          mv ./fabric/build/libs/minecraft-access*.jar $(basename -s .jar -a *)-fabric.jar
+          pushd .
+          cd ./fabric/build/libs
+          rm minecraft-access-*-dev-shadow.jar minecraft-access-*-sources.jar
+          mv minecraft-access*.jar $(basename -s .jar -a *)-fabric.jar
+          popd
+          pushd .
+          cd ./forge/build/libs
+          rm minecraft-access-*-dev-shadow.jar minecraft-access-*-sources.jar
+          mv minecraft-access*.jar $(basename -s .jar -a *)-forge.jar
+          popd
           cp ./fabric/build/libs/minecraft-access*-fabric.jar ./upload
-          rm ./forge/build/libs/minecraft-access-*-dev-shadow.jar ./forge/build/libs/minecraft-access-*-sources.jar
-          mv ./forge/build/libs/minecraft-access*.jar $(basename -s .jar -a *)-forge.jar
-          cp ./forge/build/libs/minecraft-access*-fabric.jar ./upload
+          cp ./forge/build/libs/minecraft-access*-forge.jar ./upload
 
       # Then we can download them from workflow result page
       - name: Upload Packages
