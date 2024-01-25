@@ -16,6 +16,10 @@ on:
         required: false
         description: Pre Release (only create a pre-release GitHub release, not publish to CurseForge, Modrinth)
         type: boolean
+      version:
+        default: 'latest'
+        required: false
+        description: Version to be published (git tag like 'v1.5.2-1.20.4', default to extract from gradle.properties)
       note:
         default: ''
         required: false
@@ -41,6 +45,7 @@ jobs:
     with:
       jdk-version: '17'
       build-files-cache-key: ${{ github.run_id }}
+      version: ${{ inputs.version || 'latest' }}
 
   publish:
     name: Publish
@@ -52,9 +57,13 @@ jobs:
     runs-on: ubuntu-latest
     # ref: https://docs.github.com/en/actions/using-jobs/defining-outputs-for-jobs
     outputs:
-      release-tag: ${{ steps.env.outputs.release-tag }}
+      release-tag: ${{ steps.env-gradle.outputs.release-tag || inputs.version }}
     steps:
+      # As long as we checkout right commit at first,
+      # there is no need to modify steps below this checkout step
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.version == 'latest' && '' || inputs.version }}
 
       - name: Restore Cached Mod Files
         uses: actions/cache/restore@v4
@@ -174,6 +183,7 @@ jobs:
           retry-delay: 60000
 
   # I want to keep current style of release message - "What's Changed" is wrapped and hidden
+  # And this workflow will also change existing "pre-release" release's status for formal-release publish
   post-github-release:
     name: Post GitHub Release Process
     needs: publish

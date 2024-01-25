@@ -4,18 +4,25 @@ on:
   # workflow_dispatch: You can trigger it manually from the Actions page
   # ref: https://docs.github.com/en/actions/using-workflows/manually-running-a-workflow
   workflow_dispatch:
+    inputs:
+      version:
+        default: 'latest'
+        required: false
+        description: Version to be published (git tag like 'v1.5.2-1.20.4', default to extract from gradle.properties)
 
   # workflow_call: Or it will be triggered by release workflow
   # ref: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_call
   workflow_call:
     inputs:
       jdk-version:
-        default: '17'
-        required: false
+        required: true
         type: string
       build-files-cache-key:
         required: true
         type: string
+      version:
+        default: 'latest'
+        required: false
 
 env:
   FABRIC_PATH: fabric/build/libs
@@ -26,7 +33,10 @@ env:
 
 jobs:
   test:
+    # If we want to build previous version,
+    # skip test since it's already done before
     name: Run Test Suite
+    if: ${{ inputs.version != 'latest' }}
     uses: ./.github/workflows/test.yml
     with:
       # Context "env" is not allowed here
@@ -42,10 +52,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.version == 'latest' && '' || inputs.version }}
 
       - name: Fetch latest I18N files
         uses: actions/checkout@v3
         with:
+          ref: ${{ inputs.version == 'latest' && '' || inputs.version }}
           # From another repo
           repository: 'khanshoaib3/minecraft-access-i18n'
           # Checkout the repo in mod's language assert path
