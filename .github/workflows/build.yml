@@ -23,6 +23,7 @@ on:
       version:
         default: 'latest'
         required: false
+        type: string
 
 env:
   FABRIC_PATH: fabric/build/libs
