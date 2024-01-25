@@ -34,10 +34,9 @@ env:
 
 jobs:
   test:
-    # If we want to build previous version,
-    # skip test since it's already done before
+    # Only run test job if we want to build latest version
     name: Run Test Suite
-    if: ${{ inputs.version != 'latest' }}
+    if: ${{ inputs.version == 'latest' }}
     uses: ./.github/workflows/test.yml
     with:
       # Context "env" is not allowed here
