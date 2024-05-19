@@ -52,7 +52,8 @@ jobs:
 
       - name: Set environment variables
         run: |
-          MERGE_STATUS=${{ fromJson(steps.get-pr-details.outputs.data).mergeable_state }}
+          echo "PR details: ${{ fromJson(steps.get-pr-details.outputs.data) }}"
+          MERGE_STATUS=${{ fromJson(steps.get-pr-details.outputs.data).mergeable }}
           if [ "$MERGE_STATUS" != "clean" ]; then echo "COMMENT=[Fast Forward CI] ${{ env.HEAD_REF }} cannot be merged into ${{ env.BASE_REF }} at the moment." >> $GITHUB_ENV; fi
           echo "MERGE_STATUS=$MERGE_STATUS" >> $GITHUB_ENV
           echo "BASE_REF=${{ fromJson(steps.get-pr-details.outputs.data).base.ref }}" >> $GITHUB_ENV
