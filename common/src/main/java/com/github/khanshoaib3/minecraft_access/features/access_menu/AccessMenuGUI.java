@@ -2,6 +2,7 @@ package com.github.khanshoaib3.minecraft_access.features.access_menu;
 
 import com.github.khanshoaib3.minecraft_access.MainClass;
 import com.github.khanshoaib3.minecraft_access.config.ConfigMenu;
+import com.github.khanshoaib3.minecraft_access.features.XPIndicator;
 import com.github.khanshoaib3.minecraft_access.screen_reader.ScreenReaderController;
 import com.github.khanshoaib3.minecraft_access.utils.BaseScreen;
 import net.minecraft.client.MinecraftClient;
@@ -53,7 +54,7 @@ public class AccessMenuGUI extends BaseScreen {
         this.addDrawableChild(timeOfDayButton);
 
         ButtonWidget xpButton = this.buildButtonWidget("8", "minecraft_access.access_menu.gui.button.xp",
-                (button) -> AccessMenu.getXP());
+                (button) -> XPIndicator.speakCurrentXP());
         this.addDrawableChild(xpButton);
 
         ButtonWidget refreshScreenReaderButton = this.buildButtonWidget("9", "minecraft_access.access_menu.gui.button.refresh_screen_reader",

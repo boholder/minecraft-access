@@ -4,6 +4,7 @@ import com.github.khanshoaib3.minecraft_access.MainClass;
 import com.github.khanshoaib3.minecraft_access.config.ConfigMenu;
 import com.github.khanshoaib3.minecraft_access.config.config_maps.OtherConfigsMap;
 import com.github.khanshoaib3.minecraft_access.features.BiomeIndicator;
+import com.github.khanshoaib3.minecraft_access.features.XPIndicator;
 import com.github.khanshoaib3.minecraft_access.screen_reader.ScreenReaderController;
 import com.github.khanshoaib3.minecraft_access.utils.KeyBindingsHandler;
 import com.github.khanshoaib3.minecraft_access.utils.NarrationUtils;
@@ -91,7 +92,7 @@ public class AccessMenu {
                     AccessMenu::getTimeOfDay),
             new MenuFunction("minecraft_access.access_menu.gui.button.xp",
                     GLFW.GLFW_KEY_8,
-                    AccessMenu::getXP),
+                    XPIndicator::speakCurrentXP),
             new MenuFunction("minecraft_access.access_menu.gui.button.refresh_screen_reader",
                     GLFW.GLFW_KEY_9,
                     () -> ScreenReaderController.refreshScreenReader(true)),
@@ -139,7 +140,10 @@ public class AccessMenu {
 
             if (timeOfDayKey.canBeTriggered()) getTimeOfDay();
 
-            if (xpLevelKey.canBeTriggered()) getXP();
+            if (xpLevelKey.canBeTriggered()) {
+                XPIndicator.speakCurrentXP();
+                PlayerUtils.closeScreen();
+            }
 
             if (currentBiomeKey.canBeTriggered()) getBiome();
 
@@ -236,21 +240,6 @@ public class AccessMenu {
             MainClass.speakWithNarrator(I18n.translate("minecraft_access.access_menu.biome", name), true);
         } catch (Exception e) {
             log.error("An error occurred when getting biome.", e);
-        }
-    }
-
-    public static void getXP() {
-        try {
-            if (minecraftClient.player == null) return;
-
-            minecraftClient.player.closeScreen();
-
-            MainClass.speakWithNarrator(I18n.translate("minecraft_access.access_menu.xp",
-                            PlayerUtils.getExperienceLevel(),
-                            PlayerUtils.getExperienceProgress()),
-                    true);
-        } catch (Exception e) {
-            log.error("An error occurred when getting XP.", e);
         }
     }
 

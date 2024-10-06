@@ -215,4 +215,11 @@ public class PlayerUtils {
         double air = player.getAir();
         return Math.round((air / 30) * 10) / 10;
     }
+
+    /**
+     * If any screen is opened, close it.
+     */
+    public static void closeScreen() {
+        WorldUtils.getClientPlayer().closeScreen();
+    }
 }

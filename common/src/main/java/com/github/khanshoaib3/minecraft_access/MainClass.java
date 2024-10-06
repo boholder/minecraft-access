@@ -29,7 +29,6 @@ public class MainClass {
     public static CameraControls cameraControls = null;
     public static InventoryControls inventoryControls = null;
     public static BiomeIndicator biomeIndicator = null;
-    public static XPIndicator xpIndicator = null;
     public static FacingDirection facingDirection = null;
     public static PlayerWarnings playerWarnings = null;
     public static AccessMenu accessMenu = null;
@@ -65,7 +64,6 @@ public class MainClass {
         MainClass.cameraControls = new CameraControls();
         MainClass.inventoryControls = new InventoryControls();
         MainClass.biomeIndicator = new BiomeIndicator();
-        MainClass.xpIndicator = new XPIndicator();
         MainClass.facingDirection = new FacingDirection();
         MainClass.playerWarnings = new PlayerWarnings();
         MainClass.accessMenu = new AccessMenu();
@@ -119,9 +117,6 @@ public class MainClass {
         if (biomeIndicator != null && otherConfigsMap.isBiomeIndicatorEnabled())
             biomeIndicator.update();
 
-        if (xpIndicator != null && otherConfigsMap.isXpIndicatorEnabled())
-            xpIndicator.update();
-
         facingDirection.update();
 
         PositionNarrator.getInstance().update();
@@ -130,8 +125,10 @@ public class MainClass {
         if (worldExists) {
             boolean playerExists = Objects.nonNull(WorldUtils.getClientPlayer());
             boolean noScreenOpened = Objects.isNull(WorldUtils.getCurrentScreen());
+
             if (playerExists) {
                 MouseKeySimulation.runOnTick();
+                if (otherConfigsMap.isXpIndicatorEnabled()) XPIndicator.runOnTick();
 
                 if (noScreenOpened) {
                     HealthAndHunger.runOnTick();
